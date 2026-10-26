@@ -99,7 +99,7 @@ class(dat$Species)
 # Check all classes (for each column in dat)
 str(dat)
 
-# "Classes" of vectors can be changed if needed (you'll need to, for sure, at some point!)
+R# "Classes" of vectors can be changed if needed (you'll need to, for sure, at some point!)
 
 # Let's try
 nums <- c(1,1,2,2,2,2,3,3,3,4,4,4,4,4,4,4,5,6,7,8,9)
@@ -109,6 +109,11 @@ class(nums) # make sure it's numeric
 as.factor(nums) # show in console
 nums_factor <- as.factor(nums) #assign it to a new object as a factor
 class(nums_factor) # check it
+
+nums_character <- as.factor(nums)
+class(nums_character)
+nums_character <- as.character(nums)
+class(nums_character)
 
 
 # convert numeric to character
@@ -124,6 +129,7 @@ as.numeric(vector3)
 #check it out
 plot(nums) 
 plot(nums_factor)
+plot(nums_character)
 # take note of how numeric vectors and factors behave differently in plot()
 
 
@@ -157,26 +163,33 @@ dbinom(50,100,.5) # probability of getting exactly 50 heads out of 100 coin flip
 
 seq(2,150,2) # here's the code to get a list of the even numbers between 2 and 150
 
-
+iris[seq(2,150,2), ]
 
 # 2.  Create a new object called iris_chr which is a copy of iris, except where every column is a character class
 
-
+iris_chr <- iris
+iris_chr$Sepal.Length <- as.character(iris_chr$Sepal.Length)
+iris_chr$Sepal.Width <- as.character(iris_chr$Sepal.Width)
+iris_chr$Petal.Length <- as.character(iris_chr$Petal.Length)
+iris_chr$Petal.Width <- as.character(iris_chr$Petal.Width)
+iris_chr$Species <- as.character(iris_chr$Species)
 
 # 3.  Create a new numeric vector object named "Sepal.Area" which is the product of Sepal.Length and Sepal.Width
 
-
+Sepal.Area <- iris$Sepal.Length*iris$Sepal.Width
 
 # 4.  Add Sepal.Area to the iris data frame as a new column
 
-
+iris$Sepal.Area <- iris$Sepal.Length*iris$Sepal.Width
+head(iris)
 
 # 5.  Create a new dataframe that is a subset of iris using only rows where Sepal.Area is greater than 20 
       # (name it big_area_iris)
 
-
+big_area_iris <- subset(iris, Sepal.Area > 20)
+head(big_area_iris)
 
 # 6.  Upload the last numbered section of this R script (with all answers filled in and tasks completed) 
       # to canvas
       # I should be able to run your R script and get all the right objects generated
-
+getwd()
