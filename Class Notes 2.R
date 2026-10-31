@@ -131,3 +131,100 @@ library(janitor)
 
 
 
+messy_bp = read_excel('Data/messy_bp.xlsx', skip = 3)
+view(messy_bp)
+
+# 1. combine months days years of messy bp
+
+?unite
+messy_bp |> 
+  unite(`Month of birth`, `Day birth`, sep = '-')
+
+## Fix the dates
+tidy_date_bp = messy_bp |> 
+  clean_names() |> 
+  mutate(birthday = paste(year_birth, month_of_birth, day_birth, sep = '-')) |> 
+  select(-month_of_birth, -day_birth, -year_birth)
+
+view(tidy_date_bp)
+
+##ignore the hr data and make the bp data tidy
+tidy_bp = messy_bp |> 
+  clean_names() |> 
+  mutate(birthday = paste(year_birth, month_of_birth, day_birth, sep = '-')) |> 
+  select(-month_of_birth, -day_birth, -year_birth) |> 
+  select(-starts_with("hr")) |> 
+  pivot_longer(cols = starts_with("bp"),
+               names_to = 'visit',
+               values_to = 'bp') |> 
+  mutate(visit = case_when(visit =='bp_8' ~ '1',
+                           visit =='bp_10' ~ '2',
+                           visit =='bp_12' ~ '3')) |> 
+  separate(bp, into = c('sys', 'dia'))
+
+##make the hr data tidy
+tidy_hr = messy_bp|> 
+  clean_names() |> 
+  mutate(birthday = paste(year_birth, month_of_birth, day_birth, sep = '-')) |> 
+  select(-month_of_birth, -day_birth, -year_birth, -bp_8, -bp_10, -bp_12) |> 
+  pivot_longer(cols = starts_with("hr"),
+               names_to = 'visit',
+               values_to = 'hr') |> 
+  mutate(visit = case_when(visit =='hr_9' ~ '1',
+                           visit =='hr_11' ~ '2',
+                           visit =='hr_13' ~ '3')) |> view(tidy_hr)
+
+##combine the tidy hr data and the tidy bp data
+tidy_hr_bp = full_join(tidy_bp, tidy_hr)
+view(tidy_hr_bp)
+
+tidy_hr_bp$race |> unique()
+
+## combine and make the race section tidy
+tidy_hr_bp |> 
+  mutate(race = case_when(race == 'Caucasian' | race == 'WHITE' ~ 'White',
+                           TRUE ~ race)) |> view()
+
+## October 29th Class
+birds = read_csv('Data/Bird_Measurements.csv')
+view(birds)
+
+install.packages('skimr')
+library(skimr)
+
+skim(birds)
+skim_birds = skim(birds)
+view(skim_birds)
+
+## Use skim to tidy the data frame
+
+keep = skim_birds |> 
+  filter(complete_rate >= 0.66) |> 
+  pluck('skim_variable') 
+
+str(birds)
+names(birds)
+
+birds_m = birds |> 
+  select(keep) |> 
+  select(keep, -starts_with('F_')) |> 
+  mutate(sex = 'male')
+  
+names(birds_m) = names(birds_m) |> str_remove('M_')
+view(birds_m)
+
+birds_f = birds |> 
+  select(keep) |> 
+  select(keep, -starts_with('M_')) |> 
+  mutate(sex = 'female')
+
+names(birds_f) = names(birds_f) |> str_remove('F_')
+view(birds_f)
+
+full_join(birds_m, birds_f) |> view()
+
+
+
+
+
+
