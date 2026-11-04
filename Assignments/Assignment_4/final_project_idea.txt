@@ -1,0 +1,12 @@
+
+
+	Final Project Idea
+
+ -Project Overview
+For my final project, I will be analyzing gene expression data from zebrafish exposed to mastic essential oil. My goal is to investigate changes in the gene expression associated with immune responses and inflammation. This connects to other research I'm doing with Dr Tauzin where we will be testing the effects of 4 other essential oils on the macrophage and neutrophil activity in Zebrafish.
+
+ -Data Source and Information 
+I plan to use data from NCBI's GEO database and the dataset I found (GSE74098) which has the data from the research paper I read. The dataset contains gene expression data from zebrafish that received nutritional supplementation with mastic essential oil. The dataset includes control and treatment groups and with each having three biological replicates. The data is very complicated to read but with the assistance of AI I have been able to link the GEO database into my R-studio project. The data has columns for each biological replicate of both the control and treatment group. There is also a column for the gene that was analyzed, and then I'll be creating other columns for data analysis like the average change in the gene expression etc.
+
+ -Research Questions
+I would like to investigate whether mastic essential oil supplementation produces measurable changes in gene expression related to immune function and inflammation. It will be interesting to see if I can identify genes that may be involved in inflammatory signaling pathways and immune responses and how they were affected by the mastic oil.
