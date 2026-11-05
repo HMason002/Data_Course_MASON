@@ -251,9 +251,15 @@ ggplot(top_genes,
   ) +
   theme_minimal()
 
-
-
-
+ggsave(
+  filename = "assignment_4_plot.png",
+  width = 8,
+  height = 6,
+  units = "in",
+  dpi = 300
+)
+getwd()
+list.files()
 
 
 
